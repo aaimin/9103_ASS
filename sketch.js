@@ -1,3 +1,54 @@
+//store these squares in order for animation
+let verticalSquares = []
+let horizontalSquares = []
+let colors = {
+  grey:   {r: 215, g: 215, b: 215},
+  blue:   {r: 58,  g: 88,  b: 155},
+  red:    {r: 175, g: 59,  b: 44},
+  yellow: {r: 237, g: 212, b: 32}
+}
+let squares =[
+  {x:63.5,  y:150,    w: 44, h: 40,     color: colors.blue},
+  {x:63.5,  y:537.5,  w: 44, h: 40,     color: colors.blue},
+
+  {x:120,   y:28,     w: 40,  h: 99.5,  color: colors.red},
+  {x:120,   y:85,     w: 40,  h: 30,    color: colors.grey},
+  {x:107.5, y:230,    w: 70, h: 50,     color: colors.yellow},
+  {x:130,   y:245,    w: 20, h: 20,     color: colors.grey},
+  {x:107.5, y:400,    w: 70, h:47.5,    color: colors.red},
+  {x:107.5, y:627.5,  w: 70, h: 50,     color: colors.yellow},
+  {x:130,   y:642.5,  w: 20, h: 20,     color: colors.grey},
+
+  {x:200,   y:35.5,  w: 80,  h: 80,     color: colors.red},
+  {x:220,   y:55.5,  w: 40,  h: 40,     color: colors.grey},
+  {x:200,   y:115.5, w: 80,  h: 12.5,   color: colors.grey},
+  {x:220,   y:362.5, w: 80,  h: 12.5,   color: colors.yellow},
+  {x:220,   y:375,   w: 80,  h: 72.5,   color: colors.blue},
+  {x:235,   y:400,   w: 40,  h: 35,     color: colors.yellow},
+  {x:330,   y:292.5, w: 60,  h: 55,     color: colors.yellow},
+  {x:330,   y:347.5, w: 60,  h: 15,     color: colors.grey},
+  {x:330,   y:362.5, w: 60,  h: 15,     color: colors.yellow},
+  {x:330,   y:377.5, w: 60,  h: 45,     color: colors.grey},
+  {x:330,   y:422.5, w: 60,  h: 25.5,   color: colors.yellow},
+
+  {x: 360,  y:752.5,  w:50, h:47.5,     color: colors.red},
+  
+  {x:500,   y:142.5, w: 80, h: 150,     color: colors.blue},
+  {x:500,   y:182.5, w: 80, h: 80,      color: colors.red},
+  {x:520,   y:202.5, w: 40,  h: 40,     color: colors.yellow},
+
+  {x:550,   y: 362.5, w: 80, h: 85,     color: colors.red },
+  {x:570,   y: 383.5, w: 40,  h: 40,    color: colors.grey },
+  {x:550,   y:462.5, w: 80,  h: 20,     color: colors.red },
+  {x:550,   y:482.5, w: 80,  h: 20,     color: colors.grey },
+
+  {x:687.5, y:530, w:50, h: 40, color: colors.blue},
+  {x:687.5, y:590, w:50, h: 40, color: colors.red},
+
+  {x:717.5, y:75, w:55, h: 30, color:colors.blue},
+  {x:702.5, y:180, w:50, h: 50, color:colors.red},
+]
+
 function setup() {
   //We will make the canvas the same size as the image using its properties 
   //the sample image is stored in the assets folder
@@ -38,61 +89,14 @@ function setup() {
   ]
   
   // The main theme colors of the whole artwork
-  colors = {
-    grey:   {r: 215, g: 215, b: 215},
-    blue:   {r: 58,  g: 88,  b: 155},
-    red:    {r: 175, g: 59,  b: 44},
-    yellow: {r: 237, g: 212, b: 32}
-  }
 
   // pick the first three of the colors
   squareColors = [colors.blue, colors.red, colors.grey]
 
-  squares =[
-    {x:63.5,  y:150,    w: 44, h: 40,     color: colors.blue},
-    {x:63.5,  y:537.5,  w: 44, h: 40,     color: colors.blue},
-
-    {x:120,   y:28,     w: 40,  h: 99.5,  color: colors.red},
-    {x:120,   y:85,     w: 40,  h: 30,    color: colors.grey},
-    {x:107.5, y:230,    w: 70, h: 50,     color: colors.yellow},
-    {x:130,   y:245,    w: 20, h: 20,     color: colors.grey},
-    {x:107.5, y:400,    w: 70, h:47.5,    color: colors.red},
-    {x:107.5, y:627.5,  w: 70, h: 50,     color: colors.yellow},
-    {x:130,   y:642.5,  w: 20, h: 20,     color: colors.grey},
-
-    {x:200,   y:35.5,  w: 80,  h: 80,     color: colors.red},
-    {x:220,   y:55.5,  w: 40,  h: 40,     color: colors.grey},
-    {x:200,   y:115.5, w: 80,  h: 12.5,   color: colors.grey},
-    {x:220,   y:362.5, w: 80,  h: 12.5,   color: colors.yellow},
-    {x:220,   y:375,   w: 80,  h: 72.5,   color: colors.blue},
-    {x:235,   y:400,   w: 40,  h: 35,     color: colors.yellow},
-    {x:330,   y:292.5, w: 60,  h: 55,     color: colors.yellow},
-    {x:330,   y:347.5, w: 60,  h: 15,     color: colors.grey},
-    {x:330,   y:362.5, w: 60,  h: 15,     color: colors.yellow},
-    {x:330,   y:377.5, w: 60,  h: 45,     color: colors.grey},
-    {x:330,   y:422.5, w: 60,  h: 25.5,   color: colors.yellow},
-
-    {x: 360,  y:752.5,  w:50, h:47.5,     color: colors.red},
-    
-    {x:500,   y:142.5, w: 80, h: 150,     color: colors.blue},
-    {x:500,   y:182.5, w: 80, h: 80,      color: colors.red},
-    {x:520,   y:202.5, w: 40,  h: 40,     color: colors.yellow},
-
-    {x:550,   y: 362.5, w: 80, h: 85,     color: colors.red },
-    {x:570,   y: 383.5, w: 40,  h: 40,    color: colors.grey },
-    {x:550,   y:462.5, w: 80,  h: 20,     color: colors.red },
-    {x:550,   y:482.5, w: 80,  h: 20,     color: colors.grey },
-
-    {x:687.5, y:530, w:50, h: 40, color: colors.blue},
-    {x:687.5, y:590, w:50, h: 40, color: colors.red},
-
-    {x:717.5, y:75, w:55, h: 30, color:colors.blue},
-    {x:702.5, y:180, w:50, h: 50, color:colors.red},
-  ]
-
   drawLines();
   drawSquaresWithinLines();
   drawSquaresOutOfLines();
+
 }
 
 function draw() {
@@ -100,9 +104,33 @@ function draw() {
   // there would be infinite loop and could not find the error
   // move these to the setup function
 
-  // drawLines();
-  // drawSquaresWithinLines();
-  // drawSquaresOutOfLines();
+  drawLines();
+  //drawSquaresWithinLines();
+  
+
+  // The draw function here actually add the animation to the square
+  drawSquaresOutOfLines();
+  for (let square of verticalSquares) {
+    square.y += square.speed;
+    if (square.y > height) {
+      square.y = -square.size;
+    } else if (square.y < -square.size) {
+      square.y = height;
+    }
+    fill(square.color.r, square.color.g, square.color.b);
+    rect(square.x, square.y, square.size, square.size);
+  }
+
+  for (let square of horizontalSquares) {
+    square.x += square.speed;
+    if (square.x > width) {
+      square.x = -square.size;
+    } else if (square.x < -square.size) {
+      square.x = width;
+    }
+    fill(square.color.r, square.color.g, square.color.b);
+    rect(square.x, square.y, square.size, square.size);
+  }
 }
 
 function windowResized() {
@@ -135,8 +163,8 @@ function drawSquaresWithinLines() {
   // the color of the square will be random chosen from the squareColors array
   strokeWeight(0);
   stroke(0);
-  let columnNumbers = 12
-  let rowNumbers = 11
+  let columnNumbers = 13
+  let rowNumbers = 12
   //draw random numbers of the square on vertical lines
   for (let i = 0; i < columnNumbers; i++) {
     let l = verticalLinePositions[i];
@@ -154,13 +182,13 @@ function drawSquaresWithinLines() {
     } else {
       squareNumbers = random(1, 5)
     }
+    let randomSpeed = random(1, 3);
     for (let j = 0; j < squareNumbers; j++) {
       // generate the random y coordinate for the square
       // make sure its less than the end of the line
       let ys = random(l.ys, l.ye-7.5);
-      let color = random(squareColors);
-      fill(color.r, color.g, color.b);
-      rect(l.xs-7.5, ys-7.5, 15, 15);
+      verticalSquares.push({x: l.xs-7.5, y: ys-7.5, color: random(squareColors), size: 15, speed: randomSpeed});
+      //rect(l.xs-7.5, ys-7.5, 15, 15);
     }
   }
 
@@ -184,17 +212,16 @@ function drawSquaresWithinLines() {
     } else {
       squareNumbers = random(1, 5)
     }
-
+    let randomSpeed = random(1, 3);
     for (let j = 0; j < squareNumbers; j++) {
       //generate the random x coordinate for the square
       // make sure its less than the end of the line
       let xs = random(l.xs, l.xe-7.5);
-      let color = random(squareColors);
-      fill(color.r, color.g, color.b);
-      rect(xs-7.5, l.ys-7.5, 15, 15);
+      horizontalSquares.push({x: xs-7.5, y: l.ys-7.5, color: random(squareColors), size: 15, speed: randomSpeed});
+      //rect(xs-7.5, l.ys-7.5, 15, 15);
     }
   }
-
+  
 }
 
 function drawSquaresOutOfLines() {
@@ -203,10 +230,89 @@ function drawSquaresOutOfLines() {
 
   // Initial: draw some fixed position squares
   // Might use random after finding the displine of the position of the squares
-
+  strokeWeight(0);
+  stroke(0);
   for (let i = 0; i < squares.length; i++) {
     let s = squares[i];
     fill(s.color.r, s.color.g, s.color.b);
     rect(s.x, s.y, s.w, s.h);
+  }
+}
+
+//when click on the arrows
+// the squares will change the movement direction to the clicked direction
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    for (let square of verticalSquares) {
+      square.speed = -Math.abs(square.speed);
+    }
+  } else if (keyCode === DOWN_ARROW) {
+    for (let square of verticalSquares) {
+      square.speed = +Math.abs(square.speed);
+    }
+  } else if (keyCode === LEFT_ARROW) {
+    for (let square of horizontalSquares) {
+      square.speed = -Math.abs(square.speed);
+    }
+  } else if (keyCode === RIGHT_ARROW) {
+    for (let square of horizontalSquares) {
+      square.speed = Math.abs(square.speed);
+    }
+  } else if (keyCode === 32) {
+    // The space control whether squares move or not
+    // if the speed is not zero then stop it 
+    // if the speed is zero then assign random value and start it
+    if (verticalSquares[0].speed == 0) {
+      for (let square of verticalSquares) {
+        square.speed = random(1, 3);
+      }
+      for (let square of horizontalSquares) {
+        square.speed = random(1, 3);
+      }
+    } else {
+      for (let square of verticalSquares) {
+        square.speed = 0;
+      }
+      for (let square of horizontalSquares) {
+        square.speed = 0;
+      }
+    }
+  }
+}
+
+function isMouseInsideSquare(square, mouseX, mouseY) {
+  return (
+    mouseX >= square.x &&
+    mouseX <= square.x + square.size &&
+    mouseY >= square.y &&
+    mouseY <= square.y + square.size
+  );
+}
+
+function mousePressed() {
+  const mouseX = pmouseX; // Get the previous mouse position
+  const mouseY = pmouseY;
+
+  for (let square of verticalSquares) {
+    if (isMouseInsideSquare(square, mouseX, mouseY)) {
+      square.color = random(squareColors);
+    }
+  }
+
+  for (let square of horizontalSquares) {
+    if (isMouseInsideSquare(square, mouseX, mouseY)) {
+      square.color = random(squareColors);
+    }
+  }
+
+  for (let square of squares) {
+    if (
+      mouseX >= square.x &&
+      mouseX <= square.x + square.w &&
+      mouseY >= square.y &&
+      mouseY <= square.y + square.h
+    ) {
+      square.color = random(squareColors);
+    }
   }
 }

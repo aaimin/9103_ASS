@@ -312,7 +312,7 @@ function mousePressed() {
       mouseY >= square.y &&
       mouseY <= square.y + square.h
     ) {
-      square.color = random(squareColors);
+      square.color = random(Object.values(colors));
     }
   }
 }
